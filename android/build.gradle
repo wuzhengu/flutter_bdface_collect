@@ -8,22 +8,24 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:7.3.1'
     }
 }
+
+def libs = file("libs")
 
 rootProject.allprojects {
     repositories {
         google()
         jcenter()
-        flatDir { dirs project(":flutter_bdface_collect").file("libs") }
+        flatDir { dirs libs }
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion rootProject.ext.has('compileSdkVersion')? rootProject.ext.compileSdkVersion: 30
 
     defaultConfig {
         minSdkVersion 22

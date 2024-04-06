@@ -1,3 +1,9 @@
+for(def dir = rootDir; true;) {
+    dir = dir.parentFile
+    if(!new File(dir, 'pubspec.yaml').exists()) break
+    rootProject.name = dir.name + "." + rootProject.name
+}
+
 include ':app'
 
 def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
