@@ -22,6 +22,22 @@ rootProject.allprojects {
     }
 }
 
+def flutterRoot = file("local.properties").with {
+    if(!it.exists()) return null
+    new Properties().with(true, p -> p.load(it.newReader()))["flutter.sdk"]
+}
+println("flutterRoot: $flutterRoot")
+
+def flutterRepo
+def flutterEngine
+if(flutterRoot){
+    flutterRepo = System.getenv("FLUTTER_STORAGE_BASE_URL")
+    println("flutterRepo: $flutterRepo")
+
+    flutterEngine = new File(flutterRoot, "bin/internal/engine.version").text.trim()
+    println("flutterEngine: $flutterEngine")
+}
+
 apply plugin: 'com.android.library'
 
 android {
@@ -54,7 +70,15 @@ android {
     }
 }
 
+repositories {
+    if(flutterRepo) maven { url "$flutterRepo/download.flutter.io" }
+}
 
 dependencies {
     implementation(name: "faceplatform-release-4.1.5", ext: "aar")
+
+    if(flutterRoot){
+        implementation "androidx.appcompat:appcompat:1.1.0"
+        implementation "io.flutter:flutter_embedding_debug:1.0.0-$flutterEngine"
+    }
 }
