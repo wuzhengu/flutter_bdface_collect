@@ -43,7 +43,7 @@ if(flutterRoot){
 }
 
 android {
-    compileSdkVersion rootProject.ext.has('compileSdkVersion')? rootProject.ext.compileSdkVersion: 30
+    compileSdkVersion rootProject.ext.has('compileSdkVersion')? rootProject.ext.compileSdkVersion: 31
 
     defaultConfig {
         minSdkVersion 22
